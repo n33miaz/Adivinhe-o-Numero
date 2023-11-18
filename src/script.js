@@ -1,49 +1,88 @@
 const limite = 1000;
-
-function reiniciarJogo() {
-    return Math.floor(Math.random() * limite) + 1;
-}
-
-let numSecreto = reiniciarJogo(); // geração de um número aleatório entre 0 e 1000
+let numSecreto;
 let chute = 0;
-let input = 0;
-let jogarNovamente = "n";
 let tentativas = 1;
 
-alert('Jogo da Adivinhação');
-alert(`O jogo começou! Foi gerado um número aleatório entre 1 e ${limite}, e você deve adivinhá-lo.`);
+// função para reiniciar o jogo gerando um novo número secreto
+function reiniciarJogo() {
+  numSecreto = Math.floor(Math.random() * limite) + 1;
+}
 
-do { // laço de repetição
+// função para exibir o jogo, ocultando a mensagem de boas-vindas e mostrando o contêiner do jogo
+function exibirJogo() {
+  reiniciarJogo();
+  document.getElementById("boas-vindas").style.display = "none";
+  document.getElementById("jogo").style.display = "block";
+}
 
-    // para ver o número secreto use "alert(numSecreto);"
+// função para exibir mensagens em elementos HTML específicos
+function exibirMensagem(elementId, mensagem) {
+  document.getElementById(elementId).innerText = mensagem;
+}
 
-    if (input === 0) { // para mostrar a tentativa anterior da segunda tentativa em diante
-        input = prompt('Digite seu chute:');
+// função para verificar o chute do usuário e fornecer feedback
+function verificarChute() {
+  let userInput = document.getElementById("usuario-input");
+  let input = userInput.value;
+  chute = parseInt(input);
+
+  // verifica se o chute é válido
+  if (isNaN(chute) || chute < 1 || chute > limite) {
+    exibirMensagem("prompt", `Erro, digite um número entre 1 e ${limite}`);
+    return;
+  }
+
+  // loop para fornecer feedback sobre o chute até que o usuário acerte
+  do {
+    if (chute != numSecreto) {
+      // feedback sobre o chute incorreto
+      exibirMensagem(
+        "prompt",
+        `O número é ${chute < numSecreto ? "maior" : "menor"} que ${chute}`
+      );
+      alert("Sinto muito, você errou!");
+      userInput.value = "";
+      tentativas++;
+      return;
+    } else {
+      // feedback sobre o chute correto e opção para jogar novamente
+      exibirMensagem(
+        "prompt",
+        `Parabéns, você acertou!
+                Tentativas falhas: ${tentativas}`
+      );
+      userInput.value = "";
+      jogarNovamente();
     }
-    else {
-        input = prompt(`Digite seu chute: (tentativa anterior: ${chute})`);
-    }
-    chute = parseInt(input); // validando a entrada do usuário
+  } while (chute != numSecreto);
+}
 
-    if (isNaN(chute) || chute < 1 || chute > limite) { // validação do número digitado
-        alert(`O número digitado é invalido, digite um entre 1 e ${limite}`);
-        continue;
-    }
+// função para exibir a mensagem de boas-vindas e ocultar o contêiner do jogo
+function boasVindas() {
+  document.getElementById("boas-vindas").style.display = "block";
+  document.getElementById("jogo").style.display = "none";
+}
 
-    if (chute != numSecreto) { // comparação do chute com o número aleatório
-        alert(`Sinto muito, você errou! (Dica: o número é ${chute < numSecreto ? 'maior' : 'menor'})`);
-    }
-    else {
-        alert(`Parabéns, você acertou! O número secreto é ${chute}, tentativas falhas: ${tentativas}.`);
-        jogarNovamente = prompt('Deseja jogar novamente? (s ou n)');
+// função para permitir que o usuário jogue novamente
+function jogarNovamente() {
+  // oculta o botão de chute e o input do usuário
+  document.getElementById("btnChute").style.display = "none";
+  document.getElementById("usuario-input").style.display = "none";
 
-        if (jogarNovamente.toLowerCase() === "s") {
-            numSecreto = reiniciarJogo(); // troca do valor do número secreto
-        }
-        else if (jogarNovamente.toLowerCase() === "n") {
-            alert('Muito obrigado por jogar!');
-        }
-    }
+  // cria um botão para jogar novamente
+  const container = document.getElementById("container");
+  const jogarDenovo = document.createElement("button");
+  jogarDenovo.classList.add("btnJogarNovamente");
+  jogarDenovo.textContent = "Jogar Novamente";
+  container.appendChild(jogarDenovo);
 
-    tentativas = tentativas + 1;
-} while (chute !== numSecreto || jogarNovamente.toLowerCase() === "s");
+  // adiciona um ouvinte de evento ao botão de jogar novamente
+  jogarDenovo.addEventListener("click", function () {
+    // remove o botão de jogar novamente e exibe a mensagem de boas-vindas
+    container.removeChild(jogarDenovo);
+    location.reload();
+  });
+}
+
+// mensagem inicial para o usuário sobre o jogo
+alert(`Tente adivinhar o número entre 1 e ${limite}`);

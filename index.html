@@ -4,12 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adivinhe o Numero</title>
+    <link rel="icon" href="./src/assets/brain-solid.svg" type="image/svg+xml">
+    <title>Jogo de Lógica</title>
     <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./src/responsive.css">
 </head>
 
 <body>
-
+    <div id="boas-vindas">
+        <h2 id="titulo">Seja muito bem-vindo!</h2>
+        <button id="bntComecar" onclick="exibirJogo()"><strong>Começar</strong></button>
+    </div>
+    <div id="jogo" style="display: none;">
+        <h2>Desafio do Número Secreto</h2>
+        <div class="container-jogo" id="container">
+            <p id="prompt"></p>
+            <input type="number" id="usuario-input">
+            <button id="btnChute" onclick="verificarChute()"><strong>Enviar</strong></button>
+        </div>
+    </div>
 </body>
 <script src="./src/script.js"></script>
 
