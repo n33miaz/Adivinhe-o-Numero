@@ -55,5 +55,3 @@ Este é um projeto simples de um jogo de adivinhação desenvolvido durante o ev
    cd Desafio-do-Numero-Secreto
 
 3. Abra o arquivo index.html em seu navegador favorito.
-
-4. Explore o catálogo interativo e divirta-se!
