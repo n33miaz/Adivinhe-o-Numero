@@ -3,7 +3,7 @@
 Este é um projeto simples de um jogo de adivinhação desenvolvido durante o evento "Imersão Dev" da Alura. O objetivo é criar uma experiência interativa onde o usuário tenta adivinhar um número secreto gerado aleatoriamente.
 
 **Link dos Outros Projetos:**
-- 1º aula:
+- 1º aula: [Conversor Celestial](https://github.com/n33miaz/Conversor-Celestial)
 - 2º aula: [Desafio do Número Secreto](https://github.com/n33miaz/Desafio-do-Numero-Secreto)
 - 3º aula: [Coisas Daora](https://github.com/n33miaz/Coisas-Daora)
 - 4º aula:
